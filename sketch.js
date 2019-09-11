@@ -44,7 +44,7 @@ let destroyedSound;
 let gameoverSound;
 let introSound;
 let vol = 1;
-let mute = true;
+let mute = false;
 
 // PLAYLOAD
 let sinus = 0; 
