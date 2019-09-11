@@ -76,7 +76,7 @@ let first = true;
 
 
 function preload() {
-  introSound = loadSound("../sounds/montypythonsound.mp3");
+
 
 }
 
@@ -118,6 +118,7 @@ function setup() {
   shootingSound = loadSound("sounds/laser_fastshot.wav");
   destroyedSound = loadSound("sounds/fighter_destroyed.wav");
   gameoverSound = loadSound("sounds/captured_ship_destroyed.wav");
+  introSound = loadSound("sounds/montypythonsound.mp3");
   
 
   //videos
