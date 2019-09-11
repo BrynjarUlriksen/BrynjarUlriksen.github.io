@@ -11,7 +11,7 @@ let currentButton;
 
 //loading
 let loadingCounter = 0;
-let s = "BSU production presents";
+let s = "BSU productions presents";
 let newPoint = true;
 let intro;
 let wait = 0; 
@@ -521,8 +521,10 @@ function resettOrNah(currentButton) {
     currentScreen = MAIN_MENU;
   }
   else if (currentButton == 0){
+
     for(let i = 0; i < enemies.size(); i++){
-      enemies.get(i).remove();
+      let enemy1 = enemies.get(i);
+      enemy1.remove();
       
     }
     gameover = false;
