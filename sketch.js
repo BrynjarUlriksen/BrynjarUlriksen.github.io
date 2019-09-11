@@ -535,7 +535,8 @@ function resettOrNah(currentButton) {
     scoreForEnemies = 100;
     lifes = 3;
     first = true;
-    
+    currentScreen = MAIN_MENU;
+    currentScreen = PLAY;
     
   }
   
