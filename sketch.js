@@ -76,7 +76,8 @@ let first = true;
 
 
 function preload() {
-
+  introSound = loadSound("sounds/montypythonsound.mp3");
+  intro = createVideo('videoes/Clip.MP4');
 
 }
 
@@ -118,11 +119,11 @@ function setup() {
   shootingSound = loadSound("sounds/laser_fastshot.wav");
   destroyedSound = loadSound("sounds/fighter_destroyed.wav");
   gameoverSound = loadSound("sounds/captured_ship_destroyed.wav");
-  introSound = loadSound("sounds/montypythonsound.mp3");
+  
   
 
   //videos
-  intro = createVideo('videoes/Clip.MP4');
+ 
   intro.hide();
 
   ShipRezised = shipImg//.resize(20, 20);
