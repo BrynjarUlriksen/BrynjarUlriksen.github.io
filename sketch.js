@@ -76,7 +76,7 @@ let first = true;
 
 
 function preload() {
-  introSound = loadSound("sounds/montypythonsound.mp3");
+  introSound = loadSound("../sounds/montypythonsound.mp3");
 
 }
 
