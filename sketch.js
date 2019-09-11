@@ -6,7 +6,7 @@ const PLAYLOAD = 2;
 const PLAY = 3;
 const HIGH_SCORE = 4;
 const SETTINGS = 5;
-let currentScreen = LOADING;
+let currentScreen = HIGH_SCORE;
 let currentButton;
 
 //loading
@@ -74,10 +74,14 @@ let lifes = 3;
 let gameover = true;
 let first = true;
 
+//highscores
+let database; 
+
 
 function preload() {
   introSound = loadSound("sounds/montypythonsound.mp3");
   intro = createVideo('videoes/Clip.MP4');
+  database = loadJSON("data.json");
 
 }
 
@@ -155,6 +159,7 @@ function draw() {
     drawPlayScreen();
     break;
   case(HIGH_SCORE):
+  
     drawHighScoreScreen();
     break;
   case(SETTINGS):
@@ -195,13 +200,13 @@ text(s, width/2-290 - loadingCounter/2, height/2 -220);
 if((loadingCounter === 10 || loadingCounter === 40 || loadingCounter === 70)&& newPoint == true ){
   s += ".";
   newPoint = false;
-  print(s);
+
 }
 if(loadingCounter === 11 || loadingCounter === 41 || loadingCounter === 71 ){
   newPoint = true;
   
 }
-print(loadingCounter);
+
 if (loadingCounter == 100){
   
   waitCount = true;
@@ -211,7 +216,7 @@ if(waitCount == true){
 }
 if (wait > 100){
   loadingCounter = 0;
- // introSound.stop();
+
   currentScreen = MAIN_MENU;
 }
 }
@@ -250,16 +255,16 @@ function keyPressed(){
     if(keyCode == ENTER ){
       changeHiglight(currentButton);
     }
-    if(keyCode == 0 || keyCode == 32){
+    else if (keyCode == 0 || keyCode == 32){
       changeHiglight(currentButton);
     }
-    if(keyCode == UP_ARROW){
+    else if(keyCode == UP_ARROW){
      
       currentButton--;
       
       currentButton = constrain(currentButton, 0,2);
     }
-    if (keyCode == DOWN_ARROW) {
+    else if (keyCode == DOWN_ARROW) {
       
       currentButton++;
       
@@ -284,27 +289,28 @@ function keyPressed(){
     if(keyCode == RIGHT_ARROW){
       moveX++;
     }*/
-  }
-  if(gameover){
-    if(keyCode == ENTER ){
-      resettOrNah(currentButton);
-    }
-    if(keyCode == 0 || keyCode == 32){
-      resettOrNah(currentButton);
-    }
-    if(keyCode == LEFT_ARROW){
+  
+  if(gameover ){
+      if(keyCode == ENTER ){
+        resettOrNah(currentButton);
+      }
+      if(keyCode == 0 || keyCode == 32){
+        resettOrNah(currentButton);
+      }
+      if(keyCode == LEFT_ARROW){
      
-      currentButton--;
+        currentButton--;
       
-      currentButton = constrain(currentButton, 0,1);
-    }
-    if (keyCode == RIGHT_ARROW) {
+        currentButton = constrain(currentButton, 0,1);
+      }
+      if (keyCode == RIGHT_ARROW) {
       
-      currentButton++;
+        currentButton++;
       
-      currentButton = constrain(currentButton, 0,1);
-    }
+        currentButton = constrain(currentButton, 0,1);
+      }
 
+    }
   }
 
 }
@@ -317,6 +323,7 @@ function changeHiglight(condition) {
     case 1:
       
       currentScreen = HIGH_SCORE;
+      
       break;
     case 2:
       
@@ -343,7 +350,7 @@ function drawPlayLoadScreen() {
     logoSpeed += 2 + loadingCounter/7;
     loadingCounter++;
   }
-  print(loadingCounter);
+ 
   if(loadingCounter > 100){
     currentScreen = PLAY;
   }
@@ -387,8 +394,18 @@ function drawPlayScreen(){
 }
 
 function drawHighScoreScreen(){
+  
   background(0,0,0);
-  image(imgBackground, 0, 0, width, height);  
+  image(imgBackground, 0, 0, width, height); 
+  stroke(255, 0, 0, 300);
+  fill(255, 0, 0, 300);
+  textSize(100);
+  
+  text("HIGH SCORES", width/4, 100); 
+  let higscoreArray = [];
+
+
+
 }
 function drawSettingsScreen(){
   background(0,0,0);
@@ -422,7 +439,7 @@ function checkBullets() {
     let bullet = bullets.get(index);
     if(bullet.position.y < 0){
       bullet.remove();
-      print("bullet removed");
+      
     }
     if(bullet.overlap(enemies)){
       bullet1 = bullet;
@@ -439,7 +456,7 @@ function checkBullets() {
       bullet1.remove();
 
     }
-      print("bullseye");
+      
       enemiesDead++;
       if(!(enemiesDead == 0 && shotsUsed == 0)){perfectScore = (enemiesDead/shotsUsed) *100 ;}
   
@@ -503,6 +520,11 @@ function gameOver(){
     
     gameoverSound.play();
     first = false;
+    for(let i = 0; i < enemies.size(); i++){
+      let enemy1 = enemies.get(i);
+      enemy1.remove();
+      
+    }
   }
  
   if(currentButton == 1){
@@ -518,6 +540,8 @@ function gameOver(){
 }
 function resettOrNah(currentButton) {
   if(currentButton == 1){
+    
+   
     currentScreen = MAIN_MENU;
   }
   else if (currentButton == 0){
@@ -538,6 +562,8 @@ function resettOrNah(currentButton) {
     scoreForEnemies = 100;
     lifes = 3;
     first = true;
+    
+    
     currentScreen = MAIN_MENU;
     currentScreen = PLAY;
     
