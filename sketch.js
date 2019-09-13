@@ -6,7 +6,7 @@ const PLAYLOAD = 2;
 const PLAY = 3;
 const HIGH_SCORE = 4;
 const SETTINGS = 5;
-let currentScreen = MAIN_MENU;
+let currentScreen = LOADING;
 let currentButton;
 
 //loading
@@ -77,7 +77,7 @@ let first = true;
 
 //highscores
 let database; 
-let name = "";  
+let name = "PLAYER 1";  
 let scoreSaved = 0;
 let percentageSaved = 0;
 let highscoreArray = [];
@@ -153,7 +153,7 @@ function setup() {
 
 function draw() {
   // put drawing code here
-  print(currentScreen);
+  
 
  switch (currentScreen) {
    case LOADING:
@@ -226,7 +226,7 @@ if(waitCount == true){
 }
 if (wait > 100){
   loadingCounter = 0;
-  print(currentScreen + "1");
+  
   currentScreen = MAIN_MENU;
 }
 }
@@ -326,9 +326,10 @@ function keyPressed(){
   }
   else if(currentScreen == HIGH_SCORE){
     if( (keyCode == 32|| keyCode == ENTER) && !first){
-      print("kjørtest");
+      
       currentScreen = MAIN_MENU;
       first = true;
+      pressingVar = true;
       
     }
   }
@@ -429,13 +430,16 @@ function drawHighScoreScreen(){
   let scoreArray =[]; */
   let string = "";
   
-  if(first){
+  if(pressingVar){
   for(let i = 0; i < database.highScores.length;i++){
     highscoreArray.push([database.highScores[i].score, database.highScores[i].name, database.highScores[i].percentage]);
     scoreArray.push(database.highScores[i].score);
   }
-  if(scoreSaved != 0){
+  if(scoreSaved > 0){
     highscoreArray.push([scoreSaved,name, percentageSaved ]);
+    scoreArray.push(scoreSaved);
+    print(scoreSaved, name, percentageSaved);
+    print(highscoreArray);
     
   }
   scoreArray.sort(function(a,b){return b-a});
@@ -443,11 +447,13 @@ function drawHighScoreScreen(){
     for(let j = 0; j < scoreArray.length; j++){
       if(scoreArray[i]== highscoreArray[j][0]){
         highscoreArraySorted.push(highscoreArray[j]);
+
       }
     }
   }
-  print(highscoreArraySorted);
-  first = false; // HUSK Å ENDRE DENNE TILBAKE TIL TRUE når bruker leaver
+ 
+  first = false; 
+  pressingVar = false;
 }
 
 for(let i = 0; i < highscoreArraySorted.length; i ++){
@@ -457,10 +463,10 @@ stroke(255-i*10, 0, 0, 300);
 textSize(40-i*2);
 
 string = "" + highscoreArraySorted[i][1] + ": " + highscoreArraySorted[i][0] + ",  " + highscoreArraySorted[i][2] + "%";
-print("test");
+
 if( 100 +(i+1)*90 < height -100){text(string, width/4, 100 +(i+1)*90);
 }
-print(string);
+
 }
   
 
@@ -607,11 +613,12 @@ function gameOver(){
 function resettOrNah(currentButton) {
  
   if(currentButton == 1){
-    
+   scoreSaved = score; 
+   percentageSaved = scoreForEnemies;
    gameover = false;
-   print("2");
-    currentScreen = MAIN_MENU;
-    print(currentScreen);
+   
+    currentScreen = HIGH_SCORE;
+    
   }
   else if (currentButton == 0){
 
@@ -632,7 +639,7 @@ function resettOrNah(currentButton) {
     lifes = 3;
     first = true;
     
-    print("kjørtes2t");
+    
     currentScreen = MAIN_MENU;
     currentScreen = PLAY;
     
