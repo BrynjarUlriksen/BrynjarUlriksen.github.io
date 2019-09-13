@@ -6,7 +6,7 @@ const PLAYLOAD = 2;
 const PLAY = 3;
 const HIGH_SCORE = 4;
 const SETTINGS = 5;
-let currentScreen = HIGH_SCORE;
+let currentScreen = MAIN_MENU;
 let currentButton;
 
 //loading
@@ -37,6 +37,7 @@ let yesH;
 let yes;
 let no;
 let noH;
+let main_menubtn;
 
 //sounds
 let shootingSound;
@@ -71,11 +72,19 @@ let enemiesDead = 0;
 let perfectScore = 100; 
 let scoreForEnemies = 100;
 let lifes = 3;
-let gameover = true;
+let gameover = false;
 let first = true;
 
 //highscores
 let database; 
+let name = "";  
+let scoreSaved = 0;
+let percentageSaved = 0;
+let highscoreArray = [];
+let highscoreArraySorted = [];
+let scoreArray =[]; 
+let string = "";
+let pressingVar = true;
 
 
 function preload() {
@@ -118,6 +127,7 @@ function setup() {
   yes = loadImage("images/yes.png");
   noH = loadImage("images/noH.png");
   no = loadImage("images/no.png");
+  main_menubtn = loadImage("images/main_menubtn.png");
 
   // sounds
   shootingSound = loadSound("sounds/laser_fastshot.wav");
@@ -143,7 +153,7 @@ function setup() {
 
 function draw() {
   // put drawing code here
-
+  print(currentScreen);
 
  switch (currentScreen) {
    case LOADING:
@@ -216,7 +226,7 @@ if(waitCount == true){
 }
 if (wait > 100){
   loadingCounter = 0;
-
+  print(currentScreen + "1");
   currentScreen = MAIN_MENU;
 }
 }
@@ -280,7 +290,9 @@ function keyPressed(){
       shot.scale = 1;
       bullets.add(shot);
       shotsUsed++;
+      
       shootingSound.play();
+      shootingSound.setVolume(0.2);
 
       score -= 10;
       score = constrain(score, 0, 9999999);
@@ -312,6 +324,15 @@ function keyPressed(){
 
     }
   }
+  else if(currentScreen == HIGH_SCORE){
+    if( (keyCode == 32|| keyCode == ENTER) && !first){
+      print("kjørtest");
+      currentScreen = MAIN_MENU;
+      first = true;
+      
+    }
+  }
+
 
 }
 
@@ -400,9 +421,48 @@ function drawHighScoreScreen(){
   stroke(255, 0, 0, 300);
   fill(255, 0, 0, 300);
   textSize(100);
-  
+  image(main_menubtn, width/2 - 100, height- 100, 100, 100);
   text("HIGH SCORES", width/4, 100); 
-  let higscoreArray = [];
+  /*
+  let highscoreArray = [];
+  let highscoreArraySorted = [];
+  let scoreArray =[]; */
+  let string = "";
+  
+  if(first){
+  for(let i = 0; i < database.highScores.length;i++){
+    highscoreArray.push([database.highScores[i].score, database.highScores[i].name, database.highScores[i].percentage]);
+    scoreArray.push(database.highScores[i].score);
+  }
+  if(scoreSaved != 0){
+    highscoreArray.push([scoreSaved,name, percentageSaved ]);
+    
+  }
+  scoreArray.sort(function(a,b){return b-a});
+  for(let i= 0; i < scoreArray.length; i++){
+    for(let j = 0; j < scoreArray.length; j++){
+      if(scoreArray[i]== highscoreArray[j][0]){
+        highscoreArraySorted.push(highscoreArray[j]);
+      }
+    }
+  }
+  print(highscoreArraySorted);
+  first = false; // HUSK Å ENDRE DENNE TILBAKE TIL TRUE når bruker leaver
+}
+
+for(let i = 0; i < highscoreArraySorted.length; i ++){
+let fill1 = 255 - i*10;
+fill(fill1, fill1, 0, 300);
+stroke(255-i*10, 0, 0, 300);
+textSize(40-i*2);
+
+string = "" + highscoreArraySorted[i][1] + ": " + highscoreArraySorted[i][0] + ",  " + highscoreArraySorted[i][2] + "%";
+print("test");
+if( 100 +(i+1)*90 < height -100){text(string, width/4, 100 +(i+1)*90);
+}
+print(string);
+}
+  
 
 
 
@@ -452,6 +512,7 @@ function checkBullets() {
     if(enemyCheck.overlap(bullets)){
       enemyCheck.remove();
       destroyedSound.play();
+      destroyedSound.setVolume(0.2);
       if(bullet1 != 0){
       bullet1.remove();
 
@@ -512,6 +573,11 @@ function drawLife(lifes) {
   }
 }
 function gameOver(){
+  for(let i = 0; i < enemies.size(); i++){
+    let enemy1 = enemies.get(i);
+    enemy1.remove();
+    
+  }
 
   image(gameoverImg, 0, 0, width, height);
   image(playAgain, width/2 - 150, height/1.5, 300, 100);
@@ -539,10 +605,13 @@ function gameOver(){
   
 }
 function resettOrNah(currentButton) {
+ 
   if(currentButton == 1){
     
-   
+   gameover = false;
+   print("2");
     currentScreen = MAIN_MENU;
+    print(currentScreen);
   }
   else if (currentButton == 0){
 
@@ -563,7 +632,7 @@ function resettOrNah(currentButton) {
     lifes = 3;
     first = true;
     
-    
+    print("kjørtes2t");
     currentScreen = MAIN_MENU;
     currentScreen = PLAY;
     

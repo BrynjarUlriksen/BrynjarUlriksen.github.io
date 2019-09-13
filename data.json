@@ -1,5 +1,5 @@
 {
-    "highscores": [
+    "highScores": [
         { 
             "name": "Julian Assange",
             "score" : 3000,
@@ -8,7 +8,7 @@
         
         { 
             "name": "Yoveve gamerboi",
-            "score" : 30000,
+            "score" : 100000,
             "percentage" : 99
         },
         
