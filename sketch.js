@@ -99,12 +99,7 @@ function preload() {
   introSound = loadSound("sounds/montypythonsound.mp3");
   intro = createVideo('videoes/Clip.MP4');
   database = loadJSON("data.json");
-  //TEST 1
-  for(let i = 0; i < database.highScores.length;i++){
-    highscoreArray.push([database.highScores[i].score, database.highScores[i].name, database.highScores[i].percentage]);
-    scoreArray.push(database.highScores[i].score);
-  }
-  print(scoreArray);
+
 
 }
 
@@ -162,6 +157,14 @@ function setup() {
   ship = createSprite(moveX, height - 100, 40,40);
   ship.addImage(ShipRezised);
   
+
+    //TEST 1
+    print(database.highScores);
+    for(let i = 0; i < database.highScores.length;i++){
+      highscoreArray.push([database.highScores[i].score, database.highScores[i].name, database.highScores[i].percentage]);
+      scoreArray.push(database.highScores[i].score);
+    }
+    print(scoreArray);
 
 
 }
@@ -486,21 +489,26 @@ function drawHighScoreScreen(){
     highscoreArray.push([database.highScores[i].score, database.highScores[i].name, database.highScores[i].percentage]);
     scoreArray.push(database.highScores[i].score);
   }*/
+  if(pressingVar){
   if(scoreSaved > 0){
     highscoreArray.push([scoreSaved,name, percentageSaved ]);
     scoreArray.push(scoreSaved);
     print(scoreSaved, name, percentageSaved);
     print(highscoreArray);
-    
+    scoreSaved = 0;
   }
-  scoreArray.sort(function(a,b){return b-a});
-  for(let i= 0; i < scoreArray.length; i++){
-    for(let j = 0; j < scoreArray.length; j++){
-      if(scoreArray[i]== highscoreArray[j][0]){
-        highscoreArraySorted.push(highscoreArray[j]);
-
-      //} TEST 1
+  
+ 
     }
+    highscoreArraySorted = [];
+    scoreArray.sort(function(a,b){return b-a});
+    for(let i= 0; i < scoreArray.length; i++){
+      for(let j = 0; j < scoreArray.length; j++){
+        if(scoreArray[i]== highscoreArray[j][0]){
+          highscoreArraySorted.push(highscoreArray[j]);
+  
+        //} TEST 1
+       }
   }
  
   first = false; 
