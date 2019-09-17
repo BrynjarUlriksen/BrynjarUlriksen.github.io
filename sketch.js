@@ -6,7 +6,8 @@ const PLAYLOAD = 2;
 const PLAY = 3;
 const HIGH_SCORE = 4;
 const SETTINGS = 5;
-let currentScreen = LOADING;
+const TESTINGSCREEN = 6;
+let currentScreen = TESTINGSCREEN;
 let currentButton;
 
 //loading
@@ -16,6 +17,10 @@ let newPoint = true;
 let intro;
 let wait = 0; 
 let waitCount = false;
+
+
+// test
+let testingFirst = true;
 
 //pictures
 let imgBackground;
@@ -86,6 +91,9 @@ let scoreArray =[];
 let string = "";
 let pressingVar = true;
 
+// setting
+let testingFirstSetting = true;
+
 
 function preload() {
   introSound = loadSound("sounds/montypythonsound.mp3");
@@ -105,7 +113,7 @@ function setup() {
   enemies = new Group;
   xConstrainMax = width/ 1.5;
   xConstrainMin = width/4;
-  
+  intro.play();
   noCursor();
 
   // images
@@ -139,6 +147,7 @@ function setup() {
   //videos
  
   intro.hide();
+  
 
   ShipRezised = shipImg//.resize(20, 20);
 
@@ -156,6 +165,10 @@ function draw() {
   
 
  switch (currentScreen) {
+  case TESTINGSCREEN: 
+    drawtestingScreen();
+    break;
+
    case LOADING:
      drawLoadingScreen();
      break;
@@ -184,6 +197,17 @@ function draw() {
   
 }
 
+function drawtestingScreen(){
+  background(0,0,0);
+  image(imgBackground, 0, 0, width, height);
+  
+  stroke(255, 255, 255);
+  textSize(40);
+  fill("white");
+  text("click to play", width/2- 100, height/2);
+ 
+}
+
 
 function drawLoadingScreen(){
 background(0,0,0);
@@ -193,8 +217,9 @@ image(logo, width/2 -300, height/5, 500, 200);
 
 if(first){
   if(!mute){introSound.play();}
+for(let i = 0; i < 10; i++){intro.play();}
 
-intro.play();
+
 
 first = false;
 }
@@ -232,6 +257,7 @@ if (wait > 100){
 }
 
 function drawMainMenuScreen(){
+  testingFirstSetting = true; 
   vol -= 0.1;
   vol = constrain(vol, 0, 1);
   introSound.setVolume(0, 2, 0);
@@ -334,7 +360,26 @@ function keyPressed(){
     }
   }
 
-
+ else if(currentScreen == TESTINGSCREEN){
+    if(keyCode == ENTER && testingFirst){
+      testingFirst = false;
+      currentScreen = LOADING;
+    }
+    else if ((keyCode == 0 || keyCode == 32) && testingFirst){
+      testingFirst = false;
+      currentScreen = LOADING;
+    }
+  }
+  else if(currentScreen == SETTINGS){
+    if(keyCode == ENTER && testingFirstSetting){
+      testingFirstSetting = false;
+      currentScreen = MAIN_MENU;
+    }
+    else if ((keyCode == 0 || keyCode == 32) && testingFirst){
+      testingFirst = false;
+      currentScreen = LOADING;
+    }
+  }
 }
 
 function changeHiglight(condition) {
@@ -476,6 +521,11 @@ if( 100 +(i+1)*90 < height -100){text(string, width/4, 100 +(i+1)*90);
 function drawSettingsScreen(){
   background(0,0,0);
   image(imgBackground, 0, 0, width, height);  
+  fill("white");
+  stroke("white");
+  textSize(40);
+  text("use arrows and space/ enter to navigate", width/2 - 200, height/2);
+  
 }
 
 function createEnemies(){
@@ -616,7 +666,16 @@ function resettOrNah(currentButton) {
    scoreSaved = score; 
    percentageSaved = scoreForEnemies;
    gameover = false;
-   
+   wave = 1;
+   score = 000; 
+   allDead = true;
+   opacityText = 300;
+   shotsUsed = 0;
+   enemiesDead = 0; 
+   perfectScore = 100; 
+   scoreForEnemies = 100;
+   lifes = 3;
+   first = true;
     currentScreen = HIGH_SCORE;
     
   }
