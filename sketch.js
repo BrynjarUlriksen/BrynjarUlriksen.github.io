@@ -355,7 +355,7 @@ function keyPressed(){
       
       currentScreen = MAIN_MENU;
       first = true;
-      pressingVar = true;
+      pressingVar = false; // testing3
       
     }
   }
