@@ -99,6 +99,12 @@ function preload() {
   introSound = loadSound("sounds/montypythonsound.mp3");
   intro = createVideo('videoes/Clip.MP4');
   database = loadJSON("data.json");
+  //TEST 1
+  for(let i = 0; i < database.highScores.length;i++){
+    highscoreArray.push([database.highScores[i].score, database.highScores[i].name, database.highScores[i].percentage]);
+    scoreArray.push(database.highScores[i].score);
+  }
+  print(scoreArray);
 
 }
 
@@ -355,7 +361,7 @@ function keyPressed(){
       
       currentScreen = MAIN_MENU;
       first = true;
-      //pressingVar = false; // testing3
+      pressingVar = true; // testing3 
       
     }
   }
@@ -474,12 +480,12 @@ function drawHighScoreScreen(){
   let highscoreArraySorted = [];
   let scoreArray =[]; */
   let string = "";
-  
+  /* TEST 1
   if(pressingVar){
   for(let i = 0; i < database.highScores.length;i++){
     highscoreArray.push([database.highScores[i].score, database.highScores[i].name, database.highScores[i].percentage]);
     scoreArray.push(database.highScores[i].score);
-  }
+  }*/
   if(scoreSaved > 0){
     highscoreArray.push([scoreSaved,name, percentageSaved ]);
     scoreArray.push(scoreSaved);
@@ -493,7 +499,7 @@ function drawHighScoreScreen(){
       if(scoreArray[i]== highscoreArray[j][0]){
         highscoreArraySorted.push(highscoreArray[j]);
 
-      }
+      //} TEST 1
     }
   }
  
