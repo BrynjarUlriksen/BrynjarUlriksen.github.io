@@ -158,19 +158,19 @@ function setup() {
   ship.addImage(ShipRezised);
   
 
-    //TEST 1
-    print(database.highScores);
+    //Setting up highscore system
+    
     for(let i = 0; i < database.highScores.length;i++){
       highscoreArray.push([database.highScores[i].score, database.highScores[i].name, database.highScores[i].percentage]);
       scoreArray.push(database.highScores[i].score);
     }
-    print(scoreArray);
+    
 
 
 }
 
 function draw() {
-  // put drawing code here
+  // switching between screens
   
 
  switch (currentScreen) {
@@ -205,7 +205,7 @@ function draw() {
   		
   
 }
-
+// screen to comply with googles no autoplay without interaction 
 function drawtestingScreen(){
   background(0,0,0);
   image(imgBackground, 0, 0, width, height);
@@ -217,7 +217,7 @@ function drawtestingScreen(){
  
 }
 
-
+// loadingscreen
 function drawLoadingScreen(){
 background(0,0,0);
 image(imgBackground, 0, 0, width, height);
@@ -264,7 +264,7 @@ if (wait > 100){
   currentScreen = MAIN_MENU;
 }
 }
-
+// mainmenuscreen with different buttons showing highlighted
 function drawMainMenuScreen(){
   testingFirstSetting = true; 
   vol -= 0.1;
@@ -294,7 +294,7 @@ function drawMainMenuScreen(){
   
 
 }
-//|| keyCode == SPACE
+// interaction function
 function keyPressed(){
   if(currentScreen == MAIN_MENU){
     if(keyCode == ENTER ){
@@ -390,7 +390,7 @@ function keyPressed(){
     }
   }
 }
-
+// changescreen function
 function changeHiglight(condition) {
   switch (condition) {
     case 0:
@@ -409,7 +409,7 @@ function changeHiglight(condition) {
    
   }
 }
-
+// screen where menu rolls up screen
 function drawPlayLoadScreen() {
   background(0,0,0);
   image(imgBackground, 0, 0, width, height);  
@@ -433,7 +433,7 @@ function drawPlayLoadScreen() {
   
 
 }
-
+//game screen
 function drawPlayScreen(){
  
   background(0,0,0);
@@ -468,7 +468,7 @@ function drawPlayScreen(){
 
 
 }
-
+// highscorescreen
 function drawHighScoreScreen(){
   
   background(0,0,0);
@@ -478,18 +478,11 @@ function drawHighScoreScreen(){
   textSize(100);
   image(main_menubtn, width/2 - 100, height- 100, 100, 100);
   text("HIGH SCORES", width/4, 100); 
-  /*
-  let highscoreArray = [];
-  let highscoreArraySorted = [];
-  let scoreArray =[]; */
+ 
   let string = "";
-  /* TEST 1
+  
   if(pressingVar){
-  for(let i = 0; i < database.highScores.length;i++){
-    highscoreArray.push([database.highScores[i].score, database.highScores[i].name, database.highScores[i].percentage]);
-    scoreArray.push(database.highScores[i].score);
-  }*/
-  if(pressingVar){
+    // adding player score if existing
   if(scoreSaved > 0){
     highscoreArray.push([scoreSaved,name, percentageSaved ]);
     scoreArray.push(scoreSaved);
@@ -500,6 +493,7 @@ function drawHighScoreScreen(){
   
  
     }
+    //sorting score
     highscoreArraySorted = [];
     scoreArray.sort(function(a,b){return b-a});
     for(let i= 0; i < scoreArray.length; i++){
@@ -507,14 +501,13 @@ function drawHighScoreScreen(){
         if(scoreArray[i]== highscoreArray[j][0]){
           highscoreArraySorted.push(highscoreArray[j]);
   
-        //} TEST 1
        }
   }
  
   first = false; 
   pressingVar = false;
 }
-
+// showingscore
 for(let i = 0; i < highscoreArraySorted.length; i ++){
 let fill1 = 255 - i*10;
 fill(fill1, fill1, 0, 300);
@@ -532,6 +525,7 @@ if( 100 +(i+1)*90 < height -100){text(string, width/4, 100 +(i+1)*90);
 
 
 }
+//drawing a basic settings screen, only for instruction purposes
 function drawSettingsScreen(){
   background(0,0,0);
   image(imgBackground, 0, 0, width, height);  
@@ -541,7 +535,7 @@ function drawSettingsScreen(){
   text("use arrows and space/ enter to navigate", width/2 - 200, height/2);
   
 }
-
+// creating a random number of enemies times the wavecount when round is complete
 function createEnemies(){
   let randNr = random(1 * wave, 5 * wave);
   let heightHere = -300;
@@ -562,7 +556,7 @@ function createEnemies(){
   }
 }
 
-
+// checking if bullet hits enemies
 function checkBullets() {
   let bullet1 = 0;
   for (let index = 0; index < bullets.size(); index++) {
@@ -601,16 +595,16 @@ function checkBullets() {
   if(enemies.size() == 0){allDead = true}
  
 }
-
+// writes text on drawing screen
 function writeText(score, newWave) {
   fill(255,255,255);
   textSize(40);
-  text("Your Score: ",xConstrainMax + 100, height/4- 50);
-  text(score, xConstrainMax + 100, height/4);
+  text("Your Score: ",xConstrainMax + 10, height/4- 50);
+  text(score, xConstrainMax + 10, height/4);
   
   
   textSize(20);
-  text("Hit percentage: " + perfectScore + " %", xConstrainMax + 100, height/4 + 50);
+  text("Hit percentage: " + perfectScore + " %", xConstrainMax + 10, height/4 + 50);
 
   let waveShown = wave -1;
   if(newWave){opacityText =300}
@@ -620,7 +614,7 @@ function writeText(score, newWave) {
   text("wave " + waveShown + ". Get ready...", (xConstrainMin + xConstrainMax)/3, height/2);
   opacityText--;
 }
-
+// checks if new enemies should arrive as well as if the enemies reach the bottom or the player dies
 function enemiesArriving(){
   let stopSignal = 0;
   for(let i = 0; i < enemies.size(); i++){
@@ -636,12 +630,14 @@ function enemiesArriving(){
     }
   }
 }
+// draws number of lives
 function drawLife(lifes) {
   for(let i = 0; i < lifes; i++){
     image(life, xConstrainMax + 10 + i * 40, height/1.5, 40, 40);
     
   }
 }
+// runs when the user looses all lives
 function gameOver(){
   for(let i = 0; i < enemies.size(); i++){
     let enemy1 = enemies.get(i);
@@ -674,6 +670,7 @@ function gameOver(){
   
   
 }
+// runs based on what the user wants to do when it looses all lives
 function resettOrNah(currentButton) {
  
   if(currentButton == 1){
