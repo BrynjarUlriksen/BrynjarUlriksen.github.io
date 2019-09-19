@@ -215,7 +215,7 @@ function drawtestingScreen(){
   stroke(255, 255, 255);
   textSize(40);
   fill("white");
-  text("click to play", width/2- 100, height/2);
+  text("space to play", width/2- 100, height/2);
  
 }
 
