@@ -104,23 +104,7 @@ function preload() {
   // images
   imgBackground = loadImage("images/backgroundpng.png");
   logo = loadImage("images/galagaPng.png");
-  startNew = loadImage("images/startNewGame.png");
-  startNewH = loadImage("images/startNewGameHighlighted.png");
-  highScores = loadImage("images/highscores.png");
-  highScoresH = loadImage("images/highscoresHighlighted.png");
-  settings = loadImage("images/settings.png");
-  settingsH = loadImage("images/settingsHighlighted.png");
-  shipImg = loadImage("images/galagaShip.png");
-  shipBullet = loadImage("images/galagaShot.png");
-  enemy = loadImage("images/enemy.png");
-  life = loadImage("images/life.png");
-  gameoverImg = loadImage("images/gameoverLarge.jpg");
-  playAgain = loadImage("images/playagain.png");
-  yesH = loadImage("images/yesH.png");
-  yes = loadImage("images/yes.png");
-  noH = loadImage("images/noH.png");
-  no = loadImage("images/no.png");
-  main_menubtn = loadImage("images/main_menubtn.png");
+  
 
 
 }
@@ -145,8 +129,24 @@ function setup() {
   destroyedSound = loadSound("sounds/fighter_destroyed.wav");
   gameoverSound = loadSound("sounds/captured_ship_destroyed.wav");
   
-  
-
+  // images
+  startNew = loadImage("images/startNewGame.png");
+  startNewH = loadImage("images/startNewGameHighlighted.png");
+  highScores = loadImage("images/highscores.png");
+  highScoresH = loadImage("images/highscoresHighlighted.png");
+  settings = loadImage("images/settings.png");
+  settingsH = loadImage("images/settingsHighlighted.png");
+  shipImg = loadImage("images/galagaShip.png");
+  shipBullet = loadImage("images/galagaShot.png");
+  enemy = loadImage("images/enemy.png");
+  life = loadImage("images/life.png");
+  gameoverImg = loadImage("images/gameoverLarge.jpg");
+  playAgain = loadImage("images/playagain.png");
+  yesH = loadImage("images/yesH.png");
+  yes = loadImage("images/yes.png");
+  noH = loadImage("images/noH.png");
+  no = loadImage("images/no.png");
+  main_menubtn = loadImage("images/main_menubtn.png");
   //videos
  
   intro.hide();
