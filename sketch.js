@@ -100,23 +100,7 @@ function preload() {
   intro = createVideo('videoes/Clip.MP4');
   database = loadJSON("data.json");
 
-
-}
-
-
-function setup() {
-  // put setup code here
-  frameRate(60);
-  createCanvas(windowWidth, windowHeight-5);
-  currentButton = 0;
-  currentButton = constrain(currentButton, 0, 2);
-  bullets = new Group;
-  enemies = new Group;
-  xConstrainMax = width/ 1.5;
-  xConstrainMin = width/4;
-  intro.play();
-  noCursor();
-
+  
   // images
   imgBackground = loadImage("images/backgroundpng.png");
   logo = loadImage("images/galagaPng.png");
@@ -137,6 +121,24 @@ function setup() {
   noH = loadImage("images/noH.png");
   no = loadImage("images/no.png");
   main_menubtn = loadImage("images/main_menubtn.png");
+
+
+}
+
+
+function setup() {
+  // put setup code here
+  frameRate(60);
+  createCanvas(windowWidth, windowHeight-5);
+  currentButton = 0;
+  currentButton = constrain(currentButton, 0, 2);
+  bullets = new Group;
+  enemies = new Group;
+  xConstrainMax = width/ 1.5;
+  xConstrainMin = width/4;
+  intro.play();
+  noCursor();
+
 
   // sounds
   shootingSound = loadSound("sounds/laser_fastshot.wav");
